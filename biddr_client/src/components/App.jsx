@@ -28,7 +28,9 @@ class App extends Component{
     destroySession() {
         Session.destroy().then(() => {
           this.setState({ currentUser: undefined });
+          
         });
+        
     }
 
     getUser() {
@@ -62,7 +64,10 @@ class App extends Component{
                     <AuthRoute isAuth = {currentUser} path="/auctions/new" exact 
                         render={props => <AuctionNewPage {...props} />}
                     />
-                    <Route path="/auctions/:id" component={AuctionShowPage} />
+                    {/* <Route path="/auctions/:id" component={AuctionShowPage} /> */}
+                    <Route path="/auctions/:id"
+                        render={props => <AuctionShowPage {...props} onSignIn={this.getUser} />}
+                    />
                     <Route path="/sign_in"
                         render={props => <SignInPage {...props} onSignIn={this.getUser} />}
                     />

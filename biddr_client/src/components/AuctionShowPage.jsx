@@ -10,7 +10,8 @@ class AuctionShowPage extends Component {
   
       this.state = {
         loading: true,
-        aution: undefined
+        aution: undefined,
+        current_user: undefined
       };
   
       this.deleteAuction = this.deleteAuction.bind(this);
@@ -19,12 +20,15 @@ class AuctionShowPage extends Component {
     }
   
     componentDidMount() {
+
+      const { onSignIn = () => {} } = this.props;
+      const current_user = onSignIn();
      
       const auctionId = this.props.match.params.id;
       Auction.one(auctionId)
         .then(auction => {
           console.log(auction);
-          this.setState({ loading: false, auction: auction });
+          this.setState({ loading: false, auction: auction, current_user: current_user });
         })
         .catch(() => {
           this.setState({ loading: false });
@@ -76,7 +80,7 @@ class AuctionShowPage extends Component {
     }
   
     render() {
-      const { loading, auction } = this.state;
+      const { loading, auction, current_user } = this.state;
   
       if (loading) {
         return (
@@ -93,22 +97,45 @@ class AuctionShowPage extends Component {
           </main>
         );
       }
+
+      // if(auction.current_user != current_user){
+      //   console.log(auction.current_user);
+      //   console.log(current_user);
   
-      return (
-        <main>
-          <AuctionDetails {...auction} />
-          <button onClick={this.deleteAuction}>Delete</button>
+        return (
+          <main>
+            <AuctionDetails {...auction} />
+            <button onClick={this.deleteAuction}>Delete</button>
+              <br />
+              <hr />
+            <BidNew OnNewBid={this.newBid}/>
             <br />
-            <hr />
-          <BidNew OnNewBid={this.newBid}/>
-          <br />
-          <h2>Previous Bids</h2>
-          <BidList
-            onBidDeleteClick={this.deleteBid}
-            bids={auction.bids}
-          />
-        </main>
-      );
+            <h2>Previous Bids</h2>
+            <BidList
+              onBidDeleteClick={this.deleteBid}
+              bids={auction.bids}
+            />
+          </main>
+        );
+      //}
+
+      // else{
+      //   return (
+      //     <main>
+      //       <AuctionDetails {...auction} />
+      //       <button onClick={this.deleteAuction}>Delete</button>
+      //         <br />
+      //         <hr />
+      //       {/* <BidNew OnNewBid={this.newBid}/> */}
+      //       <br />
+      //       <h2>Previous Bids</h2>
+      //       <BidList
+      //         onBidDeleteClick={this.deleteBid}
+      //         bids={auction.bids}
+      //       />
+      //     </main>
+      //   );
+      // }
     }
   }
   
