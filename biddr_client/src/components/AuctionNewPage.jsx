@@ -91,7 +91,6 @@ class AuctionNewPage extends Component {
           </div>
 
 
-
    {/* <div>
            <input
            value={value || ''}
