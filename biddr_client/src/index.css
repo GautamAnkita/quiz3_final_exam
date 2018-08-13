@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+main {
+  margin: 0 2rem;
+}
+
+.NavBar {
+  display: flex;
+  background-color: seashell;
+}
+
+.NavBar a {
+  color: steelblue;
+  text-decoration: none;
+  padding: 1rem;
+}
+
+.NavBar span {
+  padding: 1rem;
+}
+
+.NavBar a.active {
+  color: seashell;
+  background-color: steelblue;
+}
