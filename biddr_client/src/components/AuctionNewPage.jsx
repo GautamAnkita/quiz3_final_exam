@@ -87,7 +87,7 @@ class AuctionNewPage extends Component {
 
           <div>
             <label htmlFor="startdate">Ends On </label> <br />
-            <input type="text" name="startdate" value={this.startDate} placeholder='yyyy-mm-dd'/>
+            <input type="date" name="startdate" id="startdate"/>
           </div>
 
 

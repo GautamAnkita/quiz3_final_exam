@@ -66,7 +66,7 @@ class App extends Component{
                     />
                     {/* <Route path="/auctions/:id" component={AuctionShowPage} /> */}
                     <Route path="/auctions/:id"
-                        render={props => <AuctionShowPage {...props} onSignIn={this.getUser} />}
+                        render={props => <AuctionShowPage {...props} currentUser={currentUser} />}
                     />
                     <Route path="/sign_in"
                         render={props => <SignInPage {...props} onSignIn={this.getUser} />}

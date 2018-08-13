@@ -10,8 +10,7 @@ class AuctionShowPage extends Component {
   
       this.state = {
         loading: true,
-        aution: undefined,
-        current_user: undefined
+        aution: undefined
       };
   
       this.deleteAuction = this.deleteAuction.bind(this);
@@ -20,15 +19,11 @@ class AuctionShowPage extends Component {
     }
   
     componentDidMount() {
-
-      const { onSignIn = () => {} } = this.props;
-      const current_user = onSignIn();
-     
       const auctionId = this.props.match.params.id;
       Auction.one(auctionId)
         .then(auction => {
           console.log(auction);
-          this.setState({ loading: false, auction: auction, current_user: current_user });
+          this.setState({ loading: false, auction: auction});
         })
         .catch(() => {
           this.setState({ loading: false });
@@ -80,8 +75,8 @@ class AuctionShowPage extends Component {
     }
   
     render() {
-      const { loading, auction, current_user } = this.state;
-  
+      const { loading, auction} = this.state;
+      
       if (loading) {
         return (
           <main>
@@ -89,6 +84,8 @@ class AuctionShowPage extends Component {
           </main>
         );
       }
+
+      const {currentUser} = this.props;
   
       if (!auction) {
         return (
@@ -97,10 +94,6 @@ class AuctionShowPage extends Component {
           </main>
         );
       }
-
-      // if(auction.current_user != current_user){
-      //   console.log(auction.current_user);
-      //   console.log(current_user);
   
         return (
           <main>
@@ -108,8 +101,11 @@ class AuctionShowPage extends Component {
             <button onClick={this.deleteAuction}>Delete</button>
               <br />
               <hr />
-            <BidNew OnNewBid={this.newBid}/>
-            <br />
+              {auction.author.id != currentUser.id && (
+                <BidNew OnNewBid={this.newBid}/>
+              )}
+              <br />
+            
             <h2>Previous Bids</h2>
             <BidList
               onBidDeleteClick={this.deleteBid}
